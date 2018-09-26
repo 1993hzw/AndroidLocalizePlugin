@@ -17,6 +17,7 @@
 package module;
 
 /**
+ * AndroidString代表一个<string>标签的信息
  * @author airsaid
  */
 public class AndroidString {

@@ -94,7 +94,10 @@ public class ConvertAction extends AnAction implements SelectLanguageDialog.OnCl
         if (parent == null) return false;
 
         String parentName = parent.getName();
-        if (!"values".equals(parentName)) return false;
+//        if (!"values".equals(parentName)) return false;
+        if (!parentName.startsWith("values")) { // 满足values开头的资源文件夹
+            return false;
+        }
 
         return "strings.xml".equals(file.getName());
     }

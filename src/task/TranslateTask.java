@@ -32,19 +32,17 @@ import translate.querier.Querier;
 import translate.trans.AbstractTranslator;
 import translate.trans.impl.GoogleTranslator;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 /**
+ * // 负责翻译，并把翻译结果写到xml文件中
  * @author airsaid
  */
 public class TranslateTask extends Task.Backgroundable {
 
     private List<LANG> mLanguages;
-    private List<AndroidString> mAndroidStrings;
+    private List<AndroidString> mAndroidStrings; // 原始的需要翻译的xml，AndroidString代表一个<string>标签的信息
     private VirtualFile mSelectFile;
     private Map<String, List<AndroidString>> mWriteData;
     private OnTranslateListener mOnTranslateListener;
@@ -139,7 +137,8 @@ public class TranslateTask extends Task.Backgroundable {
     private void write(File file, List<AndroidString> androidStrings) {
         ApplicationManager.getApplication().invokeLater(() -> {
             ApplicationManager.getApplication().runWriteAction(() -> {
-                try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+
+                try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, false), "UTF-8"))) {
                     bw.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
                     bw.newLine();
                     bw.write("<resources>");
